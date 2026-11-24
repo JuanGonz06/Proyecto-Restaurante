@@ -72,6 +72,19 @@ pip install -r requirements-dev.txt
 pytest
 ```
 
+## Compartir los datos con el equipo (Neon)
+
+Con SQLite cada computador tiene su propia base. Para que todos vean los mismos datos, usen una base de Neon:
+
+1. En <https://neon.tech> crea un proyecto y copia la cadena de conexión (Connection string, formato `postgresql://...`).
+2. Cada integrante la pega en su `backend/.env`:
+   ```
+   DATABASE_URL=postgresql://usuario:clave@ep-xxxx.region.aws.neon.tech/neondb?sslmode=require
+   ```
+3. Arranca con `uvicorn app.main:app --reload`. Las tablas se crean solas y, si la base está vacía, se cargan los datos de ejemplo (solo la primera persona que arranque los carga).
+
+Comparte la cadena por un canal privado: **nunca la subas a GitHub** (`.env` ya está en `.gitignore`). Quien la tenga puede leer y modificar todos los datos.
+
 ## Producción
 
 - `ENTORNO=produccion` y una `SECRET_KEY` propia (obligatoria; la app no arranca sin ella).
